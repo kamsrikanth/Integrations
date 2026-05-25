@@ -21,6 +21,9 @@ setup(
     name="alertops",
     version="1.0",
     py_modules=["alertops"],
+    install_requires=[
+        "requests"
+    ],
     entry_points={
         "console_scripts": [
             "alertops=alertops:main",
