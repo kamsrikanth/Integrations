@@ -5,14 +5,16 @@ import sys
 import os
 
 
-class CustomInstall(install):
+class CustomInstallCommand(install):
     def run(self):
         install.run(self)
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         hello_file = os.path.join(current_dir, "hello_world.py")
 
-        subprocess.call([sys.executable, hello_file])
+        print("[alertops] running hello_world.py")
+
+        subprocess.check_call([sys.executable, hello_file])
 
 
 setup(
@@ -25,6 +27,6 @@ setup(
         ],
     },
     cmdclass={
-        "install": CustomInstall,
+        "install": CustomInstallCommand,
     },
 )
